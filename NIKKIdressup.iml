@@ -7,5 +7,60 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+<<<<<<< HEAD
+    <orderEntry type="library" name="alibaba.fastjson" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES />
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://D:/fastjson2-2.0.60/fastjson2-2.0.60/android-test/app/src/androidTest/java" />
+          <root url="file://D:/fastjson2-2.0.60/fastjson2-2.0.60/android-test/app/src/main/java" />
+          <root url="file://D:/fastjson2-2.0.60/fastjson2-2.0.60/benchmark/src/main/java" />
+          <root url="file://D:/fastjson2-2.0.60/fastjson2-2.0.60/benchmark/src/test/java" />
+          <root url="file://D:/fastjson2-2.0.60/fastjson2-2.0.60/benchmark_21/src/main/java" />
+          <root url="file://D:/fastjson2-2.0.60/fastjson2-2.0.60/benchmark_21/src/test/java" />
+          <root url="file://D:/fastjson2-2.0.60/fastjson2-2.0.60/codegen-test/src/test/java" />
+          <root url="file://D:/fastjson2-2.0.60/fastjson2-2.0.60/codegen/src/main/java" />
+          <root url="file://D:/fastjson2-2.0.60/fastjson2-2.0.60/codegen/src/test/java" />
+          <root url="file://D:/fastjson2-2.0.60/fastjson2-2.0.60/core/src/main/java" />
+          <root url="file://D:/fastjson2-2.0.60/fastjson2-2.0.60/core/src/test/java" />
+          <root url="file://D:/fastjson2-2.0.60/fastjson2-2.0.60/example-solon-test/src/main/java" />
+          <root url="file://D:/fastjson2-2.0.60/fastjson2-2.0.60/example-solon-test/src/test/java" />
+          <root url="file://D:/fastjson2-2.0.60/fastjson2-2.0.60/example-spring-test/src/main/java" />
+          <root url="file://D:/fastjson2-2.0.60/fastjson2-2.0.60/example-spring6-test/src/main/java" />
+          <root url="file://D:/fastjson2-2.0.60/fastjson2-2.0.60/example-spring6-test/src/test/java" />
+          <root url="file://D:/fastjson2-2.0.60/fastjson2-2.0.60/extension-jaxrs/extension-jaxrs-jakarta/src/main/java" />
+          <root url="file://D:/fastjson2-2.0.60/fastjson2-2.0.60/extension-jaxrs/extension-jaxrs-jakarta/src/test/java" />
+          <root url="file://D:/fastjson2-2.0.60/fastjson2-2.0.60/extension-jaxrs/extension-jaxrs-javax/src/main/java" />
+          <root url="file://D:/fastjson2-2.0.60/fastjson2-2.0.60/extension-jaxrs/extension-jaxrs-javax/src/test/java" />
+          <root url="file://D:/fastjson2-2.0.60/fastjson2-2.0.60/extension-solon/src/main/java" />
+          <root url="file://D:/fastjson2-2.0.60/fastjson2-2.0.60/extension-solon/src/test/java" />
+          <root url="file://D:/fastjson2-2.0.60/fastjson2-2.0.60/extension-spring5/src/main/java" />
+          <root url="file://D:/fastjson2-2.0.60/fastjson2-2.0.60/extension-spring5/src/test/java" />
+          <root url="file://D:/fastjson2-2.0.60/fastjson2-2.0.60/extension-spring6/src/main/java" />
+          <root url="file://D:/fastjson2-2.0.60/fastjson2-2.0.60/extension-spring6/src/test/java" />
+          <root url="file://D:/fastjson2-2.0.60/fastjson2-2.0.60/extension/src/main/java" />
+          <root url="file://D:/fastjson2-2.0.60/fastjson2-2.0.60/extension/src/test/java" />
+          <root url="file://D:/fastjson2-2.0.60/fastjson2-2.0.60/fastjson1-compatible/src/main/java" />
+          <root url="file://D:/fastjson2-2.0.60/fastjson2-2.0.60/fastjson1-compatible/src/test/java" />
+          <root url="file://D:/fastjson2-2.0.60/fastjson2-2.0.60/safemode-test/src/test/java" />
+          <root url="file://D:/fastjson2-2.0.60/fastjson2-2.0.60/test-jdk17/src/test/java" />
+          <root url="file://D:/fastjson2-2.0.60/fastjson2-2.0.60/test-jdk25/src/test/java" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://D:/fastjson-2.0.60-javadoc.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+        <jarDirectory url="jar://D:/fastjson-2.0.60-javadoc.jar!/" recursive="false" />
+      </library>
+    </orderEntry>
+=======
+>>>>>>> d66f3c8a65079faae4b32a24324d16e9fb8ccf91
   </component>
 </module>
