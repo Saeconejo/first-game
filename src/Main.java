@@ -7,12 +7,14 @@ import NikkiDressUp.util.FileUtil;
 import java.util.*;
 
 public class Main {
-    private static Player currentPlayer; // 当前登录玩家（全局可用）
+    private static Player currentPlayer;
+    private static final String[] STYLES = {"帅气", "甜美", "性感", "典雅", "清新"};
+    private static final Random RANDOM = new Random();
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        // 第一步：注册/登录选择
+        // 注册/登录
         System.out.println("========== 《ShiningNIKKI》换装战斗游戏 ==========");
         System.out.println("1. 新用户注册");
         System.out.println("2. 老用户登录");
@@ -28,9 +30,7 @@ public class Main {
             return;
         }
 
-        // 处理注册/登录逻辑
         if (authChoice == 1) {
-            // 注册流程
             currentPlayer = register(scanner);
             if (currentPlayer == null) {
                 System.out.println("❌ 注册失败，退出游戏！");
@@ -38,7 +38,6 @@ public class Main {
                 return;
             }
         } else if (authChoice == 2) {
-            // 登录流程
             currentPlayer = login(scanner);
             if (currentPlayer == null) {
                 System.out.println("❌ 登录失败，退出游戏！");
@@ -51,16 +50,16 @@ public class Main {
             return;
         }
 
-        // 登录/注册成功，进入游戏
+        // 登录成功
         System.out.println("\n🎉 欢迎回到《ShiningNIKKI》搭配师世界！");
         System.out.println("你当前的信息：");
         currentPlayer.showAttributes();
 
-        // 初始化NPC和场景逻辑
+        // 初始化30个NPC（27普通+3BOSS）
         List<NPC> npcList = initNPCs();
         SceneLogic sceneLogic = new SceneLogic();
 
-        // 游戏主循环
+        // 主循环
         boolean isRunning = true;
         while (isRunning) {
             System.out.println("\n======================================");
@@ -91,15 +90,28 @@ public class Main {
                     System.out.print("请输入你要练习的风格：");
                     String targetStyle = scanner.nextLine().trim();
                     sceneLogic.practiceSkill(currentPlayer, targetStyle);
-                    FileUtil.updatePlayer(currentPlayer); // 练习后保存（新增）
+                    FileUtil.updatePlayer(currentPlayer);
                     break;
 
                 case 2:
                     System.out.println("\n=== 🥊 挑战NPC 🥊 ===");
-                    NPC selectedNPC = npcList.get(new Random().nextInt(npcList.size()));
-                    System.out.println("🎯 本次对战的对手是：" + selectedNPC.getName() + "！");
-                    System.out.println("💡 提示：" + selectedNPC.getName() + "的擅长风格已在「查看NPC信息」中显示，记得参考～");
+                    NPC selectedNPC = npcList.get(RANDOM.nextInt(npcList.size()));
 
+                    // BOSS提醒机制
+                    if (selectedNPC.getName().contains("BOSS")) {
+                        System.out.println("⚠️  警告！你匹配到了强力BOSS「" + selectedNPC.getName() + "」！");
+                        System.out.println("💀 BOSS属性远超普通NPC，获胜难度极高！建议先练习对应风格～");
+                        System.out.print("是否继续挑战（Y/N）：");
+                        String confirm = scanner.nextLine().trim().toUpperCase();
+                        if (!confirm.equals("Y")) {
+                            System.out.println("✅ 已取消挑战，返回主菜单～");
+                            break;
+                        }
+                    } else {
+                        System.out.println("🎯 本次对战的对手是：" + selectedNPC.getName() + "！");
+                    }
+
+                    // 随机场景+选择风格
                     SceneLogic.SceneInfo sceneInfo = sceneLogic.getRandomSceneInfo();
                     System.out.println("\n📜 对战场景剧情：");
                     System.out.println("【场景名称】" + sceneInfo.getSceneName());
@@ -109,6 +121,7 @@ public class Main {
                     System.out.print("请根据场景剧情，选择你的主打穿搭风格：");
                     String mainStyle = scanner.nextLine().trim();
                     sceneLogic.battleWithNPC(currentPlayer, selectedNPC, mainStyle, sceneInfo);
+                    FileUtil.updatePlayer(currentPlayer); // 对战后保存属性
                     break;
 
                 case 3:
@@ -122,12 +135,16 @@ public class Main {
                         npc.showAttributes();
                         String goodAtStyle = getGoodAtStyle(npc);
                         System.out.println("💡 擅长风格：" + goodAtStyle);
+                        if (npc.getName().contains("BOSS")) {
+                            System.out.println("⚠️  类型：BOSS级NPC（属性超强）");
+                        } else {
+                            System.out.println("ℹ️  类型：普通NPC");
+                        }
                         System.out.println("------------------------");
                     }
                     break;
 
                 case 5:
-                    // 退出游戏：保存玩家信息
                     boolean saveSuccess = FileUtil.updatePlayer(currentPlayer);
                     if (saveSuccess) {
                         System.out.println("\n✅ 玩家信息已自动保存！");
@@ -143,13 +160,10 @@ public class Main {
                     System.out.println("\n❌ 无效的选择！请输入1-5之间的数字，重新选择～");
             }
         }
-
         scanner.close();
     }
 
-    /**
-     * 注册流程：输入账号、密码、昵称，验证账号唯一性
-     */
+    // 注册流程
     private static Player register(Scanner scanner) {
         System.out.println("\n=== 📝 新用户注册 ===");
         System.out.print("请输入账号（长度≥4）：");
@@ -159,7 +173,6 @@ public class Main {
         System.out.print("请输入游戏昵称：");
         String nickname = scanner.nextLine().trim();
 
-        // 校验输入合法性
         if (account.length() < 4) {
             System.out.println("❌ 账号长度必须≥4！");
             return null;
@@ -173,20 +186,17 @@ public class Main {
             return null;
         }
 
-        // 注册并保存
         boolean registerSuccess = FileUtil.registerPlayer(account, password, nickname);
         if (registerSuccess) {
             System.out.println("✅ 注册成功！正在为你创建角色...");
-            return FileUtil.login(account, password); // 注册后自动登录
+            return FileUtil.login(account, password);
         } else {
             System.out.println("❌ 注册失败！该账号已存在～");
             return null;
         }
     }
 
-    /**
-     * 登录流程：输入账号密码，验证通过返回玩家对象
-     */
+    // 登录流程
     private static Player login(Scanner scanner) {
         System.out.println("\n=== 🔑 用户登录 ===");
         System.out.print("请输入账号：");
@@ -204,46 +214,45 @@ public class Main {
         }
     }
 
-    /**
-     * 初始化NPC对手（3位不同风格擅长者）
-     */
+    // 初始化30个NPC（27普通+3BOSS）
     private static List<NPC> initNPCs() {
         List<NPC> npcList = new ArrayList<>();
 
-        // NPC1：莉莉（甜美风格擅长者）
-        Map<String, Integer> lilyAttr = new HashMap<>();
-        lilyAttr.put("帅气", 80);
-        lilyAttr.put("甜美", 120);
-        lilyAttr.put("性感", 90);
-        lilyAttr.put("典雅", 85);
-        lilyAttr.put("清新", 95);
-        npcList.add(new NPC("莉莉", lilyAttr));
+        // 1. 生成27个普通NPC（随机属性：基础70-120）
+        String[] npcNames = {
+                "莉莉", "阿明", "苏珊", "小美", "小杰", "娜娜", "阿凯", "菲菲", "阿杰",
+                "乐乐", "洋洋", "朵朵", "轩轩", "妍妍", "涛涛", "萌萌", "浩浩", "倩倩",
+                "斌斌", "丽丽", "超超", "莎莎", "明明", "静静", "强强", "婷婷", "龙龙"
+        };
+        for (String name : npcNames) {
+            Map<String, Integer> attr = generateRandomAttr(70, 120);
+            npcList.add(new NPC(name, attr));
+        }
 
-        // NPC2：阿明（帅气风格擅长者）
-        Map<String, Integer> mingAttr = new HashMap<>();
-        mingAttr.put("帅气", 130);
-        mingAttr.put("甜美", 75);
-        mingAttr.put("性感", 85);
-        mingAttr.put("典雅", 90);
-        mingAttr.put("清新", 80);
-        npcList.add(new NPC("阿明", mingAttr));
+        // 2. 生成3个BOSS NPC（属性180-250，远超普通）
+        Map<String, Integer> boss1Attr = generateRandomAttr(200, 250);
+        npcList.add(new NPC("BOSS·闪耀女王", boss1Attr));
 
-        // NPC3：苏珊（性感风格擅长者）
-        Map<String, Integer> susanAttr = new HashMap<>();
-        susanAttr.put("帅气", 85);
-        susanAttr.put("甜美", 90);
-        susanAttr.put("性感", 125);
-        susanAttr.put("典雅", 95);
-        susanAttr.put("清新", 80);
-        npcList.add(new NPC("苏珊", susanAttr));
+        Map<String, Integer> boss2Attr = generateRandomAttr(180, 230);
+        npcList.add(new NPC("BOSS·穿搭教父", boss2Attr));
 
-        System.out.println("\n📢 系统提示：已生成" + npcList.size() + "个NPC对手！");
+        Map<String, Integer> boss3Attr = generateRandomAttr(190, 240);
+        npcList.add(new NPC("BOSS·风格之神", boss3Attr));
+
+        System.out.println("\n📢 系统提示：已生成" + npcList.size() + "个NPC对手（含3个BOSS）！");
         return npcList;
     }
 
-    /**
-     * 辅助方法：判断NPC的擅长风格
-     */
+    // 生成随机属性（指定数值范围）
+    private static Map<String, Integer> generateRandomAttr(int min, int max) {
+        Map<String, Integer> attr = new HashMap<>();
+        for (String style : STYLES) {
+            attr.put(style, RANDOM.nextInt(max - min + 1) + min);
+        }
+        return attr;
+    }
+
+    // 获取NPC擅长风格
     private static String getGoodAtStyle(NPC npc) {
         Map<String, Integer> attrMap = npc.getNpcBaseAttr();
         String goodAtStyle = "";

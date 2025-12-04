@@ -5,23 +5,24 @@ import java.util.Map;
 
 public class NPC {
     private String name;
-    private Map<String, Integer> npcBaseAttr;  // NPC的五种风格基础分
+    private Map<String, Integer> npcBaseAttr;
+
+    // 无参构造（FastJSON序列化需要）
+    public NPC() {}
 
     public NPC(String name, Map<String, Integer> baseAttr) {
         this.name = name;
         this.npcBaseAttr = new HashMap<>(baseAttr);
     }
 
-    // Getter方法
     public String getName() { return name; }
-
     public Map<String, Integer> getNpcBaseAttr() { return npcBaseAttr; }
+    public void setNpcBaseAttr(Map<String, Integer> npcBaseAttr) { this.npcBaseAttr = npcBaseAttr; }
 
     public int getStyleScore(String style) {
         return npcBaseAttr.getOrDefault(style, 0);
     }
 
-    // 显示NPC属性
     public void showAttributes() {
         System.out.println("=== NPC " + name + "的属性 ===");
         for (Map.Entry<String, Integer> entry : npcBaseAttr.entrySet()) {
