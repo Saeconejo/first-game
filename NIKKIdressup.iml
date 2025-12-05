@@ -7,6 +7,10 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> e794eacaceb5477a8d4a3e3ae2b27960a7ac6642
     <orderEntry type="library" name="alibaba.fastjson" level="project" />
     <orderEntry type="module-library">
       <library>
@@ -59,5 +63,10 @@
         <jarDirectory url="jar://D:/fastjson-2.0.60-javadoc.jar!/" recursive="false" />
       </library>
     </orderEntry>
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> d66f3c8a65079faae4b32a24324d16e9fb8ccf91
+>>>>>>> e794eacaceb5477a8d4a3e3ae2b27960a7ac6642
   </component>
 </module>
